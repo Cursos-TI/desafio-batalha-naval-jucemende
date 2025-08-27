@@ -1,37 +1,60 @@
 #include <stdio.h>
 
 int main() {
-printf("===== NÍVEL NOVATO =====\n\n");
+    printf("===== NÍVEL MESTRE =====\n\n");
 
-int tabuleiro[10][10] = {0};
+    int N = 5; // tamanho da matriz (5x5)
+    int matriz[5][5]; // matriz onde vamos desenhar as habilidades
 
-    /* Navio horizontal */
-    tabuleiro[3][1] = 3;
-    tabuleiro[3][2] = 3;
-    tabuleiro[3][3] = 3;
+    printf("Saída de habilidade em cone\n");
+    for (int i = 0; i < N; i++) {          // percorre as linhas
+        for (int j = 0; j < N; j++) {      // percorre as colunas
+            // preenche um triângulo para baixo (cone)
+            if (j >= (N/2 - i) && j <= (N/2 + i)) {
+                matriz[i][j] = 1; // marca posição com 1
+            } else {
+                matriz[i][j] = 0; // fora do cone é 0
+            }
+            printf("%d ", matriz[i][j]);   // imprime valor
+        }
+        printf("\n"); // quebra de linha
+    }
+    printf("\n");
 
-    /* Navio vertical */
-    tabuleiro[4][7] = 3;
-    tabuleiro[5][7] = 3;
-    tabuleiro[6][7] = 3;
+    printf("Saída de habilidade em octaedro:\n");
+    for (int i = 0; i < N; i++) {          // percorre as linhas
+        for (int j = 0; j < N; j++) {      // percorre as colunas
+            int di = i - N/2; // distância da linha até o meio
+            if (di < 0) di = -di; // valor absoluto
+            int dj = j - N/2; // distância da coluna até o meio
+            if (dj < 0) dj = -dj; // valor absoluto
 
-    /* Navio diagonal 1*/
-    tabuleiro[5][5] = 3;
-    tabuleiro[6][4] = 3;
-    tabuleiro[7][3] = 3;
-
-    /* Navio diagonal 2 */
-    tabuleiro[0][9] = 3;
-    tabuleiro[1][8] = 3;
-    tabuleiro[2][7] = 3;
-
-    // Exibe o tabuleiro
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            printf("%d ", tabuleiro[i][j]);
+            // se a soma das distâncias for menor ou igual ao raio, marca 1
+            if (di + dj <= N/2) {
+                matriz[i][j] = 1;
+            } else {
+                matriz[i][j] = 0;
+            }
+            printf("%d ", matriz[i][j]);   // imprime valor
         }
         printf("\n");
     }
-    printf("\n\n");
+    printf("\n");
+
+    printf("Saída de habilidade em cruz:\n");
+    for (int i = 0; i < N; i++) {          // percorre as linhas
+        for (int j = 0; j < N; j++) {      // percorre as colunas
+            // marca linha do meio ou coluna do meio
+            if (i == N/2 || j == N/2) {
+                matriz[i][j] = 1;
+            } else {
+                matriz[i][j] = 0;
+            }
+            printf("%d ", matriz[i][j]);   // imprime valor
+        }
+        printf("\n");
+    }
+    printf("\n");
+
     return 0;
 }
